@@ -17,7 +17,11 @@ namespace Leopotam.EcsLite.UnityEditor {
             foreach (var constraint in type.GetGenericArguments ()) {
                 constraints += constraints.Length > 0 ? $", {GetCleanGenericTypeName (constraint)}" : constraint.Name;
             }
-            return $"{type.Name.Substring (0, type.Name.LastIndexOf ("`", StringComparison.Ordinal))}<{constraints}>";
+            var genericIndex = type.Name.LastIndexOf ("`", StringComparison.Ordinal);
+            var typeName = genericIndex == -1
+                ? type.Name
+                : type.Name.Substring (0, genericIndex);
+            return $"{typeName}<{constraints}>";
         }
     }
 
