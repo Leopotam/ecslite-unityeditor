@@ -135,15 +135,10 @@ public struct C2 {
 // Файл должен лежать где-то в проекте - будет обнаружен и подключен автоматически.
 #if UNITY_EDITOR
 sealed class C2Inspector : EcsComponentInspectorTyped<C2> {
-    public override bool OnGuiTyped (string label, ref C2 value, EcsEntityDebugView entityView) {
+    public override void OnGuiTyped (string label, ref C2 value, EcsEntityDebugView entityView) {
         EditorGUILayout.LabelField ($"Super C2 component", EditorStyles.boldLabel);
-        var newValue = EditorGUILayout.TextField ("Name", value.Name);
+        value.Name = EditorGUILayout.TextField ("Name", value.Name);
         EditorGUILayout.HelpBox ($"Hello, {value.Name}", MessageType.Info);
-        // Если значение не поменялось - возвращаем false.
-        if (newValue == value.Name) { return false; }
-        // Иначе - обновляем значение и возвращаем true.
-        value.Name = newValue;
-        return true;
     }
 }
 #endif
