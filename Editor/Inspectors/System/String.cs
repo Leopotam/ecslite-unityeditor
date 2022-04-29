@@ -11,11 +11,8 @@ namespace Leopotam.EcsLite.UnityEditor.Inspectors {
             return true;
         }
 
-        public override bool OnGuiTyped (string label, ref string value, EcsEntityDebugView entityView) {
-            var newValue = EditorGUILayout.TextField (label, value);
-            if (newValue == value) { return false; }
-            value = newValue;
-            return true;
+        public override void OnGuiTyped (string label, ref string value, EcsEntityDebugView entityView) {
+            value = EditorGUILayout.TextField (label, value);
         }
     }
 }

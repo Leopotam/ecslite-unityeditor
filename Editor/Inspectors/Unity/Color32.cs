@@ -8,11 +8,8 @@ using UnityEngine;
 
 namespace Leopotam.EcsLite.UnityEditor.Inspectors {
     sealed class Color32Inspector : EcsComponentInspectorTyped<Color32> {
-        public override bool OnGuiTyped (string label, ref Color32 value, EcsEntityDebugView entityView) {
-            var newValue = EditorGUILayout.ColorField (label, value);
-            if (newValue == value) { return false; }
-            value = newValue;
-            return true;
+        public override void OnGuiTyped (string label, ref Color32 value, EcsEntityDebugView entityView) {
+            value = EditorGUILayout.ColorField (label, value);
         }
     }
 }

@@ -8,11 +8,8 @@ using UnityEngine;
 
 namespace Leopotam.EcsLite.UnityEditor.Inspectors {
     sealed class BoundsInspector : EcsComponentInspectorTyped<Bounds> {
-        public override bool OnGuiTyped (string label, ref Bounds value, EcsEntityDebugView entityView) {
-            var newValue = EditorGUILayout.BoundsField (label, value);
-            if (newValue == value) { return false; }
-            value = newValue;
-            return true;
+        public override void OnGuiTyped (string label, ref Bounds value, EcsEntityDebugView entityView) {
+            value = EditorGUILayout.BoundsField (label, value);
         }
     }
 }

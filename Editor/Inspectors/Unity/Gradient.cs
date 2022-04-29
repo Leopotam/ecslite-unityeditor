@@ -8,11 +8,8 @@ using UnityEngine;
 
 namespace Leopotam.EcsLite.UnityEditor.Inspectors {
     sealed class GradientInspector : EcsComponentInspectorTyped<Gradient> {
-        public override bool OnGuiTyped (string label, ref Gradient value, EcsEntityDebugView entityView) {
-            var newValue = EditorGUILayout.GradientField (label, value);
-            if (newValue.Equals (value)) { return false; }
-            value = newValue;
-            return true;
+        public override void OnGuiTyped (string label, ref Gradient value, EcsEntityDebugView entityView) {
+            value = EditorGUILayout.GradientField (label, value);
         }
     }
 }

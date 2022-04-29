@@ -167,6 +167,6 @@ namespace Leopotam.EcsLite.UnityEditor {
             return (default, default);
         }
 
-        public abstract bool OnGuiTyped (string label, ref T value, EcsEntityDebugView entityView);
+        public abstract void OnGuiTyped (string label, ref T value, EcsEntityDebugView entityView);
     }
 }

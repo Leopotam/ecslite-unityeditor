@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Leopotam.EcsLite.UnityEditor.Inspectors {
     sealed class EcsPackedEntityWithWorldInspector : EcsComponentInspectorTyped<EcsPackedEntityWithWorld> {
-        public override bool OnGuiTyped (string label, ref EcsPackedEntityWithWorld value, EcsEntityDebugView entityView) {
+        public override void OnGuiTyped (string label, ref EcsPackedEntityWithWorld value, EcsEntityDebugView entityView) {
             EditorGUILayout.BeginHorizontal ();
             EditorGUILayout.PrefixLabel (label);
             if (value.Unpack (out var unpackedWorld, out var unpackedEntity)) {
@@ -27,7 +27,6 @@ namespace Leopotam.EcsLite.UnityEditor.Inspectors {
                 }
             }
             EditorGUILayout.EndHorizontal ();
-            return false;
         }
     }
 }
