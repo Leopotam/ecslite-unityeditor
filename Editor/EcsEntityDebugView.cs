@@ -159,8 +159,9 @@ namespace Leopotam.EcsLite.UnityEditor {
                 return (default, default);
             }
             var typedValue = (T) value;
-            var changed = OnGuiTyped (label, ref typedValue, entityView);
-            if (changed) {
+            EditorGUI.BeginChangeCheck();
+            OnGuiTyped (label, ref typedValue, entityView);
+            if (EditorGUI.EndChangeCheck()) {
                 return (true, typedValue);
             }
             return (default, default);
