@@ -3,13 +3,12 @@ using UnityEngine;
 
 namespace #NS# {
     sealed class #SCRIPTNAME# : MonoBehaviour {
-        EcsSystems _systems;
+        EcsWorld _world;        
+        IEcsSystems _systems;
 
-        void Start () {        
-            // register your shared data here, for example:
-            // var shared = new Shared ();
-            // systems = new EcsSystems (new EcsWorld (), shared);
-            _systems = new EcsSystems (new EcsWorld ());
+        void Start () {
+            _world = new EcsWorld ();
+            _systems = new EcsSystems (_world);
             _systems
                 // register your systems here, for example:
                 // .Add (new TestSystem1 ())
@@ -26,16 +25,25 @@ namespace #NS# {
         }
 
         void Update () {
+            // process systems here.
             _systems?.Run ();
         }
 
         void OnDestroy () {
             if (_systems != null) {
+                // list of custom worlds will be cleared
+                // during IEcsSystems.Destroy(). so, you
+                // need to save it here if you need.
                 _systems.Destroy ();
-                // add here cleanup for custom worlds, for example:
-                // _systems.GetWorld ("events").Destroy ();
-                _systems.GetWorld ().Destroy ();
                 _systems = null;
+            }
+            
+            // cleanup custom worlds here.
+            
+            // cleanup default world.
+            if (_world != null) {
+                _world.Destroy ();
+                _world = null;
             }
         }
     }
