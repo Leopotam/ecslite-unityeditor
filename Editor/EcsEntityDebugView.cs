@@ -40,7 +40,7 @@ namespace Leopotam.EcsLite.UnityEditor {
                         EditorGUILayout.LabelField (typeName, EditorStyles.boldLabel);
                         var indent = EditorGUI.indentLevel;
                         EditorGUI.indentLevel++;
-                        foreach (var field in type.GetFields (BindingFlags.Instance | BindingFlags.Public)) {
+                        foreach (var field in type.GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)) {
                             DrawTypeField (component, pool, field, debugView);
                         }
                         EditorGUI.indentLevel = indent;

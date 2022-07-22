@@ -40,6 +40,9 @@
 ## Через код
 ```c#
 // ecs-startup code:
+
+IEcsSystems _systems;
+
 void Start () {        
     _systems = new EcsSystems (new EcsWorld ());
     _systems
@@ -56,7 +59,7 @@ void Update () {
     // Отладочные системы являюся обычными ECS-системами и для их корректной работы
     // требуется выполнять их запуск через EcsSystems.Run(), иначе имена сущностей
     // не будут обновляться, к тому же это приведет к постоянным внутренним аллокациям.
-    _systems.Run();
+    _systems?.Run();
 }
 ```
 
@@ -79,17 +82,16 @@ void Update () {
 ### Я хочу создавать сущности в `IEcsPreInitSystem`-системе, но отладочные системы бросают исключения в этом случае. Как это исправить??
 
 Проблема в том, что `EcsWorldDebugSystem` тоже является `IEcsPreInitSystem`-системой и происходит конфликт из-за порядка систем.
-Решение - все отладочные системы следует вынести в отдельный `EcsSystems`:
-If you really want to create data in `PreInit()` method (that not recommended), you can extract `EUS` to separate `EcsSystems` group:
+Решение - все отладочные системы следует вынести в отдельный `IEcsSystems` и вызвать его инициализацию раньше основного кода:
 ```c#
-    EcsSystems _systems;
+    IEcsSystems _systems;
 #if UNITY_EDITOR
-    EcsSystems _editorSystems;
+    IEcsSystems _editorSystems;
 #endif
     void Awake () {
         _systems = new EcsSystems (new EcsWorld ());
 #if UNITY_EDITOR
-        // create separate EcsSystems group for editor systems only.
+        // Создаем отдельную группу для отладочных систем.
         _editorSystems = new EcsSystems (_systems.GetWorld ());
         _editorSystems
             .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ())
@@ -103,14 +105,14 @@ If you really want to create data in `PreInit()` method (that not recommended), 
     void Update () {
         _systems?.Run ();
 #if UNITY_EDITOR
-        // process editor systems group after standard logic. 
+        // Выполняем обновление состояния отладочных систем. 
         _editorSystems?.Run ();
 #endif
     }
     
     void OnDestroy () {
 #if UNITY_EDITOR
-        // cleanup editor systems group.
+        // Выполняем очистку отладочных систем.
         if (_editorSystems != null) {
             _editorSystems.Destroy ();
             _editorSystems = null;

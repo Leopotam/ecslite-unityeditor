@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 namespace Leopotam.EcsLite.UnityEditor {
     public sealed class EcsWorldDebugSystem : IEcsPreInitSystem, IEcsRunSystem, IEcsWorldEventListener {
         readonly string _worldName;
-        readonly GameObject _rootGO;
+        readonly GameObject _rootGo;
         readonly Transform _entitiesRoot;
         readonly bool _bakeComponentsInName;
         readonly string _entityNameFormat;
@@ -24,15 +24,15 @@ namespace Leopotam.EcsLite.UnityEditor {
             _bakeComponentsInName = bakeComponentsInName;
             _worldName = worldName;
             _entityNameFormat = entityNameFormat;
-            _rootGO = new GameObject (_worldName != null ? $"[ECS-WORLD {_worldName}]" : "[ECS-WORLD]");
-            Object.DontDestroyOnLoad (_rootGO);
-            _rootGO.hideFlags = HideFlags.NotEditable;
+            _rootGo = new GameObject (_worldName != null ? $"[ECS-WORLD {_worldName}]" : "[ECS-WORLD]");
+            Object.DontDestroyOnLoad (_rootGo);
+            _rootGo.hideFlags = HideFlags.NotEditable;
             _entitiesRoot = new GameObject ("Entities").transform;
             _entitiesRoot.gameObject.hideFlags = HideFlags.NotEditable;
-            _entitiesRoot.SetParent (_rootGO.transform, false);
+            _entitiesRoot.SetParent (_rootGo.transform, false);
         }
 
-        public void PreInit (EcsSystems systems) {
+        public void PreInit (IEcsSystems systems) {
             _world = systems.GetWorld (_worldName);
             if (_world == null) { throw new Exception ("Cant find required world."); }
             _entities = new EcsEntityDebugView [_world.GetWorldSize ()];
@@ -45,7 +45,7 @@ namespace Leopotam.EcsLite.UnityEditor {
             }
         }
 
-        public void Run (EcsSystems systems) {
+        public void Run (IEcsSystems systems) {
             foreach (var pair in _dirtyEntities) {
                 var entity = pair.Key;
                 var entityName = entity.ToString (_entityNameFormat);
@@ -98,7 +98,7 @@ namespace Leopotam.EcsLite.UnityEditor {
 
         public void OnWorldDestroyed (EcsWorld world) {
             _world.RemoveEventListener (this);
-            Object.Destroy (_rootGO);
+            Object.Destroy (_rootGo);
         }
 
         public EcsEntityDebugView GetEntityView (int entity) {

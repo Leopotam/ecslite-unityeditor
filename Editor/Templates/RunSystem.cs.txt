@@ -2,7 +2,7 @@
 
 namespace #NS# {
     sealed class #SCRIPTNAME# : IEcsRunSystem {        
-        public void Run (EcsSystems systems) {
+        public void Run (IEcsSystems systems) {
             // add your run code here.
         }
     }

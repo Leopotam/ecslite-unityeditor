@@ -2,7 +2,7 @@
 
 namespace #NS# {
     sealed class #SCRIPTNAME# : IEcsInitSystem {
-        public void Init (EcsSystems systems) {
+        public void Init (IEcsSystems systems) {
             // add your initialize code here.
         }
     }
