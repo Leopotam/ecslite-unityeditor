@@ -104,5 +104,9 @@ namespace Leopotam.EcsLite.UnityEditor {
         public EcsEntityDebugView GetEntityView (int entity) {
             return entity >= 0 && entity < _entities.Length ? _entities[entity] : null;
         }
+
+        public GameObject GetGameObject () {
+            return _rootGo;
+        }
     }
 }
