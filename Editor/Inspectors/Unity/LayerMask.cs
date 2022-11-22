@@ -12,10 +12,13 @@ namespace Leopotam.EcsLite.UnityEditor.Inspectors {
 
         static string[] GetLayerNames () {
             if (_layerNames == null) {
+                var size = 0;
                 var names = new string[32];
                 for (var i = 0; i < names.Length; i++) {
                     names[i] = LayerMask.LayerToName (i);
+                    if (names[i].Length > 0) { size = i + 1; }
                 }
+                if (size != names.Length) { System.Array.Resize (ref names, size); }
                 _layerNames = names;
             }
             return _layerNames;
