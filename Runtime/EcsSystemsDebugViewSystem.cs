@@ -3,7 +3,6 @@
 // Copyright (c) 2012-2022 Leopotam <leopotam@yandex.ru>
 // ----------------------------------------------------------------------------
 
-#if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -56,4 +55,3 @@ namespace Leopotam.EcsLite.UnityEditor {
         }
     }
 }
-#endif

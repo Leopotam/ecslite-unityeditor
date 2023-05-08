@@ -3,7 +3,6 @@
 // Copyright (c) 2012-2022 Leopotam <leopotam@yandex.ru>
 // ----------------------------------------------------------------------------
 
-#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,4 +40,3 @@ namespace Leopotam.EcsLite.UnityEditor {
         [NonSerialized] public List<string> PostDestroySystems;
     }
 }
-#endif
