@@ -4,21 +4,11 @@
 // ----------------------------------------------------------------------------
 
 #if UNITY_EDITOR
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Leopotam.EcsLite.UnityEditor {
-    public sealed class EcsSystemsDebugView : MonoBehaviour {
-        [NonSerialized] public List<string> PreInitSystems;
-        [NonSerialized] public List<string> InitSystems;
-        [NonSerialized] public List<string> RunSystems;
-        [NonSerialized] public List<string> PostRunSystems;
-        [NonSerialized] public List<string> DestroySystems;
-        [NonSerialized] public List<string> PostDestroySystems;
-    }
-
     public sealed class EcsSystemsDebugSystem : IEcsPreInitSystem, IEcsPostDestroySystem {
         readonly string _systemsName;
         GameObject _go;
