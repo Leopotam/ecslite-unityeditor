@@ -51,6 +51,8 @@ void Start () {
         // Регистрируем отладочные системы по контролю за состоянием каждого отдельного мира:
         // .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ("events"))
         .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ())
+        // Регистрируем отладочные системы по контролю за текущей группой систем. 
+        .Add (new Leopotam.EcsLite.UnityEditor.EcsSystemsDebugSystem ())
 #endif
         .Init ();
 }
@@ -109,6 +111,10 @@ void Update () {
 #endif
         _systems
             .Add (new Sys ())
+#if UNITY_EDITOR
+            // Подключаем контроль систем в ту группу, которая содержит наш код.
+            .Add (new Leopotam.EcsLite.UnityEditor.EcsSystemsDebugSystem ())
+#endif
             .Init ();
     }
     
