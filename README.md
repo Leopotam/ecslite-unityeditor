@@ -39,7 +39,7 @@
 
 ## Через код
 ```c#
-// ecs-startup code:
+// Инициализация окружения.
 
 IEcsSystems _systems;
 
@@ -51,12 +51,14 @@ void Start () {
         // Регистрируем отладочные системы по контролю за состоянием каждого отдельного мира:
         // .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ("events"))
         .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem ())
+        // Регистрируем отладочные системы по контролю за текущей группой систем. 
+        .Add (new Leopotam.EcsLite.UnityEditor.EcsSystemsDebugSystem ())
 #endif
         .Init ();
 }
 
 void Update () {
-    // Отладочные системы являюся обычными ECS-системами и для их корректной работы
+    // Отладочные системы являются обычными ECS-системами и для их корректной работы
     // требуется выполнять их запуск через EcsSystems.Run(), иначе имена сущностей
     // не будут обновляться, к тому же это приведет к постоянным внутренним аллокациям.
     _systems?.Run();
@@ -109,6 +111,10 @@ void Update () {
 #endif
         _systems
             .Add (new Sys ())
+#if UNITY_EDITOR
+            // Подключаем контроль систем в ту группу, которая содержит наш код.
+            .Add (new Leopotam.EcsLite.UnityEditor.EcsSystemsDebugSystem ())
+#endif
             .Init ();
     }
     

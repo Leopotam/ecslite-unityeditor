@@ -3,8 +3,8 @@
 // Copyright (c) 2012-2022 Leopotam <leopotam@yandex.ru>
 // ----------------------------------------------------------------------------
 
-#if UNITY_EDITOR
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Leopotam.EcsLite.UnityEditor {
@@ -26,12 +26,17 @@ namespace Leopotam.EcsLite.UnityEditor {
     }
 
     public sealed class EcsEntityDebugView : MonoBehaviour {
-        [NonSerialized]
-        public EcsWorld World;
-        [NonSerialized]
-        public int Entity;
-        [NonSerialized]
-        public EcsWorldDebugSystem DebugSystem;
+        [NonSerialized] public EcsWorld World;
+        [NonSerialized] public int Entity;
+        [NonSerialized] public EcsWorldDebugSystem DebugSystem;
+    }
+
+    public sealed class EcsSystemsDebugView : MonoBehaviour {
+        [NonSerialized] public List<string> PreInitSystems;
+        [NonSerialized] public List<string> InitSystems;
+        [NonSerialized] public List<string> RunSystems;
+        [NonSerialized] public List<string> PostRunSystems;
+        [NonSerialized] public List<string> DestroySystems;
+        [NonSerialized] public List<string> PostDestroySystems;
     }
 }
-#endif
