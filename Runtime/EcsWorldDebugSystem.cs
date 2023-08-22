@@ -84,7 +84,7 @@ namespace Leopotam.EcsLite.UnityEditor {
             }
         }
 
-        public void OnEntityChanged (int entity) {
+        public void OnEntityChanged (int entity, short poolId, bool added) {
             if (_bakeComponentsInName) {
                 _dirtyEntities[entity] = 1;
             }
