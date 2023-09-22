@@ -4,7 +4,7 @@
     "displayName": "LeoECS Lite Unity Integration",
     "description": "LeoECS Lite - Интеграция в редактор юнити содержит шаблоны кода, а так же предоставляет мониторинг состояния мира.",
     "unity": "2020.3",
-    "version": "2023.5.22",
+    "version": "2023.9.22",
     "keywords": [
         "leoecs",
         "ecs",
