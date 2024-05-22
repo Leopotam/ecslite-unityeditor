@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------------
-// The Proprietary or MIT-Red License
-// Copyright (c) 2012-2022 Leopotam <leopotam@yandex.ru>
+// The MIT-Red License
+// Copyright (c) 2012-2024 Leopotam <leopotam@yandex.ru>
 // ----------------------------------------------------------------------------
 
 using UnityEditor;
