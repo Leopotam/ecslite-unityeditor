@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------------
-// The Proprietary or MIT-Red License
-// Copyright (c) 2012-2022 Leopotam <leopotam@yandex.ru>
+// The MIT-Red License
+// Copyright (c) 2012-2024 Leopotam <leopotam@yandex.ru>
 // ----------------------------------------------------------------------------
 
 using System;
@@ -35,7 +35,7 @@ namespace Leopotam.EcsLite.UnityEditor {
         public void PreInit (IEcsSystems systems) {
             _world = systems.GetWorld (_worldName);
             if (_world == null) { throw new Exception ("Cant find required world."); }
-            _entities = new EcsEntityDebugView [_world.GetWorldSize ()];
+            _entities = new EcsEntityDebugView[_world.GetWorldSize ()];
             _dirtyEntities = new Dictionary<int, byte> (_entities.Length);
             _world.AddEventListener (this);
             var entities = Array.Empty<int> ();
