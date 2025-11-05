@@ -16,6 +16,7 @@ namespace Leopotam.EcsLite.UnityEditor {
         const int MaxFieldToStringLength = 128;
 
         static object[] _componentsCache = new object[32];
+        static Dictionary<Type, bool> _componentsFolds = new (256);
 
         public override void OnInspectorGUI () {
             var observer = (EcsEntityDebugView) target;
@@ -32,25 +33,30 @@ namespace Leopotam.EcsLite.UnityEditor {
                     var component = _componentsCache[i];
                     _componentsCache[i] = null;
                     var type = component.GetType ();
-                    GUILayout.BeginVertical (GUI.skin.box);
-                    var typeName = EditorExtensions.GetCleanGenericTypeName (type);
-                    var pool = debugView.World.GetPoolByType (type);
-                    var (rendered, changed, newValue) = EcsComponentInspectors.Render (typeName, type, component, debugView);
-                    if (!rendered) {
-                        EditorGUILayout.LabelField (typeName, EditorStyles.boldLabel);
-                        var indent = EditorGUI.indentLevel;
-                        EditorGUI.indentLevel++;
-                        foreach (var field in type.GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)) {
-                            DrawTypeField (component, pool, field, debugView);
-                        }
-                        EditorGUI.indentLevel = indent;
-                    } else {
-                        if (changed) {
-                            // update value.
-                            pool.SetRaw (debugView.Entity, newValue);
-                        }
+                    if (!_componentsFolds.TryGetValue (type, out var folded)) {
+                        folded = true;
                     }
-                    GUILayout.EndVertical ();
+                    var typeName = EditorExtensions.GetCleanGenericTypeName (type);
+                    var newFolded = EditorGUILayout.Foldout (folded, typeName);
+                    if (newFolded != folded) {
+                        _componentsFolds[type] = newFolded;
+                    }
+                    if (newFolded) {
+                        GUILayout.BeginVertical (GUI.skin.box);
+                        var pool = debugView.World.GetPoolByType (type);
+                        var (rendered, changed, newValue) = EcsComponentInspectors.Render (typeName, type, component, debugView);
+                        if (!rendered) {
+                            foreach (var field in type.GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)) {
+                                DrawTypeField (component, pool, field, debugView);
+                            }
+                        } else {
+                            if (changed) {
+                                // update value.
+                                pool.SetRaw (debugView.Entity, newValue);
+                            }
+                        }
+                        GUILayout.EndVertical ();
+                    }
                     EditorGUILayout.Space ();
                 }
             }
