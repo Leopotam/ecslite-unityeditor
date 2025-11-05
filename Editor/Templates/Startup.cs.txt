@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace #NS# {
     sealed class #SCRIPTNAME# : MonoBehaviour {
-        EcsWorld _world;        
+        EcsWorld _world;
         IEcsSystems _systems;
 
         void Start () {
@@ -13,7 +13,7 @@ namespace #NS# {
                 // register your systems here, for example:
                 // .Add (new TestSystem1 ())
                 // .Add (new TestSystem2 ())
-                
+
                 // register additional worlds here, for example:
                 // .AddWorld (new EcsWorld (), "events")
 #if UNITY_EDITOR
@@ -37,9 +37,9 @@ namespace #NS# {
                 _systems.Destroy ();
                 _systems = null;
             }
-            
+
             // cleanup custom worlds here.
-            
+
             // cleanup default world.
             if (_world != null) {
                 _world.Destroy ();
